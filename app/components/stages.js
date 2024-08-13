@@ -5,9 +5,9 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import { Box, Button, useDisclosure, Image, ChakraProvider, Textarea } from '@chakra-ui/react'
 
-import configFile from "../config.json";
+import networkFile from "../networks.json";
 
-const config = configFile;
+const config = networkFile;
 
 export default function Stages() {
   const router = useRouter()
@@ -58,24 +58,40 @@ export default function Stages() {
             }
           }} />
 
-          {Array.from({ length: metadata.total_steps * 2 }, (_, i) => {
-            if (i % 2 === 1) {
-              return (<div key={i} className="line"></div>)
+          {Array.from({ length: metadata.total_steps}, (_, i) => {
+            
+            if ( i === metadata.total_steps -1) {
+              if (i === step) {
+                return (
+                  <Image key={i}
+                    height={"90px"}
+                    src='/images/character/walking-side.png' 
+                    alt='hero' 
+                  />
+                )
+              } else if (i < step ) {
+                return (<div key={i} className="dot flex-item done"></div>)
+              } else {
+                return (<div key={i} className="dot flex-item"></div>)
+              }
             }
-            if (i === step * 2) {
 
+            if (i === step) {
               return (
-                <Image key={i}
-                  height={"90px"}
-                  src='/images/character/walking-side.png' 
-                  alt='hero' 
-                />
+                <>
+                  <Image key={i}
+                    height={"90px"}
+                    src='/images/character/walking-side.png' 
+                    alt='hero' 
+                  />
+                  <div key={i} className="line"></div>
+                </>
               )
-
-            } else if (i < step * 2) {
-              return (<div key={i} className="dot flex-item done"></div>)
+              
+            } else if (i < step ) {
+              return (<><div key={i} className="dot flex-item done"></div><div key={i} className="line"></div></>)
             } else {
-              return (<div key={i} className="dot flex-item"></div>)
+              return (<><div key={i} className="dot flex-item"></div><div key={i} className="line"></div></>)
             }
           })}
 

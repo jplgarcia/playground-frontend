@@ -11,9 +11,9 @@ import {
 } from '@chakra-ui/react'
 import injectedModule from "@web3-onboard/injected-wallets";
 import { init } from "@web3-onboard/react";
-import configFile from "../config.json";
+import networkFile from "../networks.json";
 
-const config = configFile;
+const config = networkFile;
 const injected = injectedModule();
 init({
   wallets: [injected],
@@ -40,10 +40,7 @@ export default function Navbar() {
 
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain();
-  const [dappAddress, setDappAddress] = useState(
-    "0xab7528bb862fb57e8a2bcd567a2e929a0be56a5e"
-  );
- 
+
   return (
     <>
       <ChakraProvider>
@@ -68,7 +65,6 @@ export default function Navbar() {
             )}
             {wallet && (
               <div className='walletWrapper'>
-                {/* <div> */}
                   <div className='chainBox'>
                     <label>Switch Chain</label>
                     {settingChain ? (
@@ -95,14 +91,6 @@ export default function Navbar() {
                       </select>
                     )}                  
                   </div>
-                  {/* <div className='dappBox'>
-                    Dapp Address <input
-                      type="text"
-                      value={dappAddress}
-                      onChange={(e) => setDappAddress(e.target.value)}
-                    />
-                  </div> */}
-                {/* </div> */}
                 <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
 
               </div>

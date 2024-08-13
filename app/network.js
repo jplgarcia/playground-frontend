@@ -10,21 +10,14 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 import { useConnectWallet, useSetChain } from "@web3-onboard/react";
-import configFile from "./config.json";
+import networkFile from "./networks.json";
 
-const config = configFile;
-import { Input } from "./Input";
+const config = networkFile;
 import { useState } from "react";
-import { Inspect } from "./inspect";
-import { Notice } from "./notices";
-import { Report } from './reports';
-import { Voucher } from './voucher';
 export const Network = () => {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain();
-  const [dappAddress, setDappAddress] = useState(
-    "0xab7528bb862fb57e8a2bcd567a2e929a0be56a5e"
-  );
+
   return (
     <div>
       {!wallet && (
@@ -57,20 +50,7 @@ export const Network = () => {
               })}
             </select>
           )}
-          <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
-          <div>
-            Dapp Address: <input
-              type="text"
-              value={dappAddress}
-              onChange={(e) => setDappAddress(e.target.value)}
-            />
-            <br /><br />
-          </div>
-          <Input dappAddress={dappAddress} />
-          <Inspect />
-          <Report />
-          <Notice />
-          <Voucher dappAddress={dappAddress} />
+          <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button> 
         </div>
       )}
     </div>

@@ -4,8 +4,8 @@ import React, { use, useEffect, useState } from "react";
 import { useSetChain } from "@web3-onboard/react";
 import { getVoucher, getVouchers, executeVoucher, getUnexecutedVouchers } from "@mugen-builders/client";
 import { useWallets } from "@web3-onboard/react";
-import configFile from './config.json';
-const config = configFile;
+import networkFile from './networks.json';
+const config = networkFile;
 let apiURL = "https://jplayground.fly.dev/graphql";
 export const Voucher = (propos) => {
     const [connectedWallet] = useWallets();

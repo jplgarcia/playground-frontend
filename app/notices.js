@@ -2,8 +2,8 @@ import { getNotices, getNotice } from "@mugen-builders/client";
 import { useSetChain } from "@web3-onboard/react";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import configFile from "./config.json";
-const config = configFile;
+import networkFile from "./networks.json";
+const config = networkFile;
 let apiURL = "https://jplayground.fly.dev/graphql";
 export const Notice = (props) => {
     const connectedChain = props.chain;

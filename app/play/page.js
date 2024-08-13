@@ -4,25 +4,22 @@ import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import { Box, Button, useDisclosure, Image, ChakraProvider, Textarea } from '@chakra-ui/react'
-import injectedModule from "@web3-onboard/injected-wallets";
-import { init } from "@web3-onboard/react";
 import { useConnectWallet, useSetChain } from "@web3-onboard/react";
-import Editor, { DiffEditor, useMonaco, loader } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
 
-import { advanceDAppRelay, advanceERC20Deposit, advanceERC721Deposit, advanceEtherDeposit, advanceInput, getNotice, getReport } from "@mugen-builders/client";
+import { advanceEtherDeposit, advanceInput } from "@mugen-builders/client";
 import { ethers } from 'ethers';
 import { test } from './code.verifier'
-import { Notice } from '../notices';
-import { Report } from '../reports';
-import { Voucher } from '../voucher';
 
 import Navbar from '../components/navbar'
 import Stages from '../components/stages'
 import MdBox from '../components/mdbox';
 
-import configFile from "../config.json";
+import { switchNetwork } from '../switchNetwork';
 
-const config = configFile;
+import networkFile from "../networks.json";
+
+const config = networkFile;
 
 function Playground() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
@@ -60,6 +57,9 @@ function Playground() {
       alert("Please connect your web3 wallet to proceed!")
       return
     }
+
+    await switchNetwork(wallet)
+
     let response
     switch (chapter) {
       case 0:
@@ -184,6 +184,7 @@ function Playground() {
                 height={"25px"}
                 backgroundColor="#2a2a2a">
                 <Button
+                  isDisabled={ chapter==1 && step == 0 || chapter==1 && step == 1 }
                   onClick={() => {
                     run();
                   }}
@@ -205,19 +206,7 @@ function Playground() {
           </Box>
 
         </Box>
-        {alloutputs && wallet &&
-          <div>
 
-          </div>
-        }
-
-        {singleOutput && wallet &&
-          <div>
-            <Notice chain={connectedChain} index={0} />
-            <Report chain={connectedChain} index={1} />
-
-          </div>
-        }
 
       </ChakraProvider>
     </>

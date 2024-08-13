@@ -1,9 +1,9 @@
 import { useSetChain } from "@web3-onboard/react";
 import { useState } from "react";
-import configFile from "./config.json";
+import networkFile from "./networks.json";
 import { _fetchData } from "ethers/lib/utils";
 import { ethers } from "ethers";
-const config = configFile;
+const config = networkFile;
 export const Inspect = () => {
     const [{ connectedChain }] = useSetChain();
     const [inspectData, setInspectData] = useState("");
